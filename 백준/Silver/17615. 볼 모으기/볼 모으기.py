@@ -1,51 +1,23 @@
 n = int(input())
-balls = [i for i in input()]
-
-def move_balls(balls, color):
-    idx = 1
-    cnt = 0
-
-    while idx!=len(balls):    
-        if balls[idx] == color:
-
-            # 만약 양 옆의 공의 색이 다르다면
-            if balls[idx]!= balls[idx-1]:
-                temp_idx = idx
-                while True:
-                    balls1 = balls[temp_idx-1]
-                    balls2 = balls[temp_idx]
-
-                    balls[temp_idx]=balls1
-                    balls[temp_idx-1] = balls2
-
-                    if temp_idx-1==0 or balls[temp_idx-1] == balls[temp_idx-2]:
-                        cnt+=1
-                        # print(balls, idx)
-                        break
-                    temp_idx-=1
-
-                idx+=1
-            # 만약 양 옆의 공의 색이 같다면
-            else:
-                idx+=1
-        else: idx+=1
-    return cnt
+balls = input().strip()
 
 
-newballs = balls[:]
-r_balls = move_balls(newballs, "R")
+move_cnt = []
 
-newballs = balls[:]
-b_balls = move_balls(newballs, "B")
+# R 우측으로 보냄
+rrballs = balls.rstrip("R")
+move_cnt.append(rrballs.count("R"))
 
-newballs = balls[:]
-newballs.reverse()
-r_reverse_balls = move_balls(newballs, "R")
+# R 좌측으로 보냄
+rlballs = balls.lstrip("R")
+move_cnt.append(rlballs.count("R"))
 
-newballs = balls[:]
-newballs.reverse()
-b_reverse_balls = move_balls(newballs, "B")
+# B 우측으로 보냄
+brballs = balls.rstrip("B")
+move_cnt.append(brballs.count("B"))
 
-min_move = min([r_balls, b_balls, r_reverse_balls, b_reverse_balls])
+# B 좌측으로 보냄
+blballs = balls.lstrip("B")
+move_cnt.append(blballs.count("B"))
 
-print(min_move)
+print(min(move_cnt))
